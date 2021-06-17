@@ -39,6 +39,29 @@ class Sodoku {
         }
         return true;
     }
+
+    isValidColumn(colIdx, customBoard = false) {
+        let board = customBoard ? customBoard : this.gameState;
+        const used = new Set();
+        const cubes = [];
+        if (colIdx <= 3) { 
+            cubes.push(board[0]); cubes.push(board[3]); cubes.push(board[6]);
+        } else if (colIdx <=6) {
+            cubes.push(board[1]); cubes.push(board[4]); cubes.push(board[7]);
+        } else if (colIdx <= 9) {
+            cubes.push(board[2]); cubes.push(board[5]); cubes.push(board[8]);
+        }
+        for (let cube = 0; cube < cubes.length; cube++) {
+            for (let row = 0; row < cubes[cube].length; row++) {
+                const num = cubes[cube][row][colIdx];
+                console.log(num);
+                if (num === null) continue;
+                if (used.has(num) || num > 9) return false;
+                used.add(num);
+            }
+        }
+        return true;
+    }
 }
 
 // Testing Notes while in DEV
@@ -49,6 +72,108 @@ class Sodoku {
 // Board[Cube][Row][0-3] ==> A single cubes row's number
 // So: Board[CubeIndex][RowIndex][CellIndex]
 const Board = [
+    [ 
+        [
+            1,
+            2,
+            3,
+        ],
+        [
+            2,
+            5,
+            6,
+        ],
+        [
+            3,
+            8,
+            9,
+        ],
+    ],
+    [ 
+        [
+            4,
+            5,
+            6,
+        ],
+        [
+            5,
+            5,
+            6,
+        ],
+        [
+            6,
+            8,
+            9,
+        ],
+    ],
+    [ 
+        [
+            7,
+            8,
+            9,
+        ],
+        [
+            4,
+            5,
+            6,
+        ],
+        [
+            7,
+            8,
+            9,
+        ],
+    ],
+    [ 
+        [
+            1,
+            2,
+            3,
+        ],
+        [
+            4,
+            5,
+            6,
+        ],
+        [
+            7,
+            8,
+            9,
+        ],
+    ],
+    [ 
+        [
+            4,
+            5,
+            6,
+        ],
+        [
+            4,
+            5,
+            6,
+        ],
+        [
+            7,
+            8,
+            9,
+        ],
+    ],
+    [ 
+        [
+            7,
+            8,
+            9,
+        ],
+        [
+            4,
+            5,
+            6,
+        ],
+        [
+            7,
+            8,
+            9,
+        ],
+    ],
     [ 
         [
             1,
@@ -103,4 +228,5 @@ const Board = [
 ];
 
 const game = new Sodoku(Board);
-console.log(game.isValidRow(0));
+console.log(game.gameState);
+console.log(game.isValidColumn(0));
