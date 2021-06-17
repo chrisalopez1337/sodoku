@@ -18,6 +18,20 @@ class Sodoku {
         }
         return true;
     }
+
+    isValidRow(rowIdx, customBoard = false) {
+        let board = customBoard ? customBoard : this.gameState;
+        const used = new Set();
+        for (let cube = 0; cube < board.length; cube++) {
+            for (let cell = 0; cell < board[cube][rowIdx].length; cell++) {
+                const num = board[cube][rowIdx][cell];
+                if (num === null) continue;
+                if (used.has(num) || num > 9) return false;
+                used.add(num);
+            }
+        }
+        return true;
+    }
 }
 
 // Testing Notes while in DEV
@@ -67,4 +81,4 @@ const Board = [
 ];
 
 const game = new Sodoku(Board);
-console.log(game.isValidCube(1));
+console.log(game.isValidRow(0));
