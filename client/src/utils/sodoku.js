@@ -22,9 +22,16 @@ class Sodoku {
     isValidRow(rowIdx, customBoard = false) {
         let board = customBoard ? customBoard : this.gameState;
         const used = new Set();
-        for (let cube = 0; cube < board.length; cube++) {
-            for (let cell = 0; cell < board[cube][rowIdx].length; cell++) {
-                const num = board[cube][rowIdx][cell];
+        const cubes = rowIdx <= 3 
+            ? board.slice(0, 4) 
+            : rowIdx <= 6 
+            ? board.slice(4, 7)
+            : rowIdx <= 9
+            ? board.slice(7, 10)
+            : null;
+        for (let cube = 0; cube < cubes.length; cube++) {
+            for (let cell = 0; cell < cubes[cube][rowIdx].length; cell++) {
+                const num = cubes[cube][rowIdx][cell];
                 if (num === null) continue;
                 if (used.has(num) || num > 9) return false;
                 used.add(num);
@@ -42,7 +49,6 @@ class Sodoku {
 // Board[Cube][Row][0-3] ==> A single cubes row's number
 // So: Board[CubeIndex][RowIndex][CellIndex]
 const Board = [
-    // Example of a solved and valid cube
     [ 
         [
             1,
@@ -60,12 +66,28 @@ const Board = [
             9,
         ],
     ],
-    // Example of an invalid cube and one that isnt solved
     [ 
         [
-            3,
-            3,
-            3,
+            4,
+            5,
+            6,
+        ],
+        [
+            4,
+            5,
+            6,
+        ],
+        [
+            7,
+            8,
+            9,
+        ],
+    ],
+    [ 
+        [
+            7,
+            8,
+            9,
         ],
         [
             4,
